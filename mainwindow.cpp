@@ -20,11 +20,10 @@ MainWindow::MainWindow(QWidget *parent) :
     plot2();
 
     connect(ui->pushButton, SIGNAL( released() ), this, SLOT( button_connect() ) );
-    connect(ui->pushButton_2, SIGNAL( released() ), this, SLOT( button_disconnect() ) );
 
     QTimer *timer = new QTimer(this);
     connect(timer, SIGNAL( timeout() ), this, SLOT( realtimeDataSlot() ) );
-    timer->start( 100 );
+    timer->start( 80 );
 }
 
 MainWindow::~MainWindow()
@@ -45,7 +44,6 @@ void MainWindow::button_disconnect()
 
 void MainWindow::plot1()
 {
-
     ui->m_CustomPlot->addGraph();
     ui->m_CustomPlot->graph(0)->setPen(QPen(Qt::red));
     ui->m_CustomPlot->graph(0)->setBrush(QBrush(Qt::red));

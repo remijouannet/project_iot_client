@@ -7,6 +7,9 @@ client_tcp::client_tcp(QObject *parent) :
     QObject(parent)
 {
     socket = new QTcpSocket(this);
+    connect(socket, SIGNAL(connected()),this, SLOT(sconnected()));
+    connect(socket, SIGNAL(disconnected()),this, SLOT(sdisconnected()));
+    connect(socket, SIGNAL(readyRead()),this, SLOT(sreadyRead()));
 }
 
 client_tcp::~client_tcp()
@@ -16,11 +19,8 @@ client_tcp::~client_tcp()
 
 bool client_tcp::doConnect(QString addr, int port)
 {
-    connect(socket, SIGNAL(connected()),this, SLOT(sconnected()));
-    connect(socket, SIGNAL(disconnected()),this, SLOT(sdisconnected()));
-    connect(socket, SIGNAL(readyRead()),this, SLOT(sreadyRead()));
-
     qDebug() << "connecting...";
+    ext_disconnected();
     socket->connectToHost(addr, port, QIODevice::ReadWrite);
     return socket->waitForConnected();
 }
