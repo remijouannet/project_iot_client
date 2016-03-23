@@ -25,6 +25,5 @@ double mem_info::getMemoryTotal(){
     file = fopen("/proc/meminfo", "r");
     fscanf(file, "MemTotal: %llu kB",&memtotal);
     fclose(file);
-    printf("MemTotal: %llu\n", memtotal);
     return memtotal;
 }
