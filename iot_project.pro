@@ -15,10 +15,12 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     qcustomplot.cpp \
-    client_tcp.cpp
+    client_tcp.cpp \
+    protocole.cpp
 
 HEADERS  += mainwindow.h \
     qcustomplot.h \
-    client_tcp.h
+    client_tcp.h \
+    protocole.h
 
 FORMS    += mainwindow.ui

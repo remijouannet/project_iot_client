@@ -2,6 +2,7 @@
 
 #include "client_tcp.h"
 #include "mainwindow.h"
+#include "protocole.h"
 
 client_tcp::client_tcp(QObject *parent) :
     QObject(parent)
@@ -39,15 +40,16 @@ void client_tcp::sreadyRead()
 {
     QByteArray result = socket->readAll();
 
-    if(memcmp(result, "1", 1) == 0){
-        result.remove(0, 2);
-        MainWindow::value0 = strtod(result.data(), NULL);
-    }else if(memcmp(result, "2", 1) == 0){
-        result.remove(0, 2);
-        MainWindow::value1 = strtod(result.data(), NULL);
-    }else if(memcmp(result, "3", 1) == 0){
-        result.remove(0, 2);
-        MainWindow::value2 = strtod(result.data(), NULL);
+    protocole::reponse reponse;
+
+    protocole::parse_reponse((char*)result.constData(), &reponse);
+
+    if(reponse.query == 1){
+        MainWindow::value0 = strtod(reponse.message, NULL);
+    }else if(reponse.query == 2){
+        MainWindow::value1 = strtod(reponse.message, NULL);
+    }else if(reponse.query == 3){
+        MainWindow::value2 = strtod(reponse.message, NULL);
     }
 }
 

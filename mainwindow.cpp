@@ -1,4 +1,3 @@
-#include <unistd.h>
 #include <QHostAddress>
 
 #include "mainwindow.h"
@@ -31,8 +30,14 @@ MainWindow::~MainWindow()
 
 void MainWindow::button_connect()
 {
+
+
     s.doConnect(ui->lineEdit_2->text(), ui->lineEdit->text().toInt());
-    s.write("3", 1);
+
+    char buffer[500] = {0};
+    int len = 0;
+    protocole::send_query(&buffer[0], (char*)ui->lineEdit_3->text().toStdString().c_str(), 3, &len);
+    s.write(&buffer[0], len);
 }
 
 void MainWindow::button_disconnect()
@@ -86,8 +91,13 @@ void MainWindow::plot2()
 void MainWindow::realtimeDataSlot()
 {
     if(s.isconnected()){
-        s.write("1", 1);
-        s.write("2", 1);
+        char buffer[500] = {0};
+        int len = 0;
+
+        protocole::send_query(&buffer[0], (char*)ui->lineEdit_3->text().toStdString().c_str(), 1, &len);
+        s.write(&buffer[0], len);
+        protocole::send_query(&buffer[0], (char*)ui->lineEdit_3->text().toStdString().c_str(), 2, &len);
+        s.write(&buffer[0], len);
 
         double key = QDateTime::currentDateTime().toMSecsSinceEpoch()/1000.0;
         static double lastPointKey = 0;
