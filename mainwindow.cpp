@@ -3,8 +3,6 @@
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "cpu_usage.h"
-#include "mem_info.h"
 
 double MainWindow::value0 = 0;
 double MainWindow::value1 = 0;
